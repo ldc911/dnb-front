@@ -26,7 +26,7 @@ function Login() {
     try {
       event.preventDefault();
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/login`,
+        `dnb-back-production.up.railway.app/login`,
         inputs
       );
 
