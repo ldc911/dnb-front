@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -5,6 +7,8 @@ import { XCircleIcon } from "@heroicons/react/24/solid";
 import logo from "../assets/logo.png";
 import pictureForm from "../assets/form-picture.webp";
 import { AuthContext } from "../contexts/AuthContext";
+
+dotenv.config();
 
 function Login() {
   const navigate = useNavigate();
@@ -26,7 +30,7 @@ function Login() {
     try {
       event.preventDefault();
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/login`,
+        `${process.env.VITE_BACKEND_URL}/login`,
         inputs
       );
 
