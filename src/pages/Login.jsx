@@ -1,5 +1,3 @@
-import dotenv from "dotenv";
-
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +6,7 @@ import logo from "../assets/logo.png";
 import pictureForm from "../assets/form-picture.webp";
 import { AuthContext } from "../contexts/AuthContext";
 
-dotenv.config();
+require("dotenv").config();
 
 function Login() {
   const navigate = useNavigate();
