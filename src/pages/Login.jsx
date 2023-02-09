@@ -6,8 +6,6 @@ import logo from "../assets/logo.png";
 import pictureForm from "../assets/form-picture.webp";
 import { AuthContext } from "../contexts/AuthContext";
 
-require("dotenv").config();
-
 function Login() {
   const navigate = useNavigate();
 
@@ -28,7 +26,7 @@ function Login() {
     try {
       event.preventDefault();
       const response = await axios.post(
-        `${process.env.VITE_BACKEND_URL}/login`,
+        `${import.meta.env.VITE_BACKEND_URL}/login`,
         inputs
       );
 
