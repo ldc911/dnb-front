@@ -34,7 +34,7 @@ function Login() {
         setUserData(response.data.user);
         navigate("/");
       } else {
-        console.log(`${import.meta.env.VITE_BACKEND_URL}`);
+        console.log(`coucou`);
 
         console.error(response);
       }
