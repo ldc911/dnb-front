@@ -34,11 +34,10 @@ function Login() {
         setUserData(response.data.user);
         navigate("/");
       } else {
-        console.log(`coucou`);
-
         console.error(response);
       }
     } catch (error) {
+      console.log(`${import.meta.env.VITE_BACKEND_URL}`);
       console.error(error.message);
       setErrorConnection(true);
     }
