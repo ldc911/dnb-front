@@ -26,10 +26,10 @@ function Login() {
     try {
       event.preventDefault();
       const response = await axios.post(
-        `dnb-back-production.up.railway.app/login`,
+        `${import.meta.env.VITE_BACKEND_URL}/login`,
         inputs
       );
-
+      console.log(`${import.meta.env.VITE_BACKEND_URL}/login`);
       if (response.data.token) {
         setUser(response.data.token);
         setUserData(response.data.user);
