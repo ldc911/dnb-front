@@ -55,9 +55,9 @@ function App() {
           <Route
             path=""
             element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
+              // <ProtectedRoute>
+              <Home />
+              // </ProtectedRoute>
             }
           />
           <Route
@@ -71,9 +71,9 @@ function App() {
           <Route
             path="profile"
             element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
+              // <ProtectedRoute>
+              <Profile />
+              // </ProtectedRoute>
             }
           />
         </Route>
