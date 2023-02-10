@@ -39,25 +39,25 @@ function App() {
         <Route
           path="/login"
           element={
-            // <ProtectedRouteLogin>
-            <Login />
-            // </ProtectedRouteLogin>
+            <ProtectedRouteLogin>
+              <Login />
+            </ProtectedRouteLogin>
           }
         />
         <Route
           path="/"
           element={
-            // <ProtectedRoute>
-            <NavBar />
-            // </ProtectedRoute>
+            <ProtectedRoute>
+              <NavBar />
+            </ProtectedRoute>
           }
         >
           <Route
             path=""
             element={
-              // <ProtectedRoute>
-              <Home />
-              // </ProtectedRoute>
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
             }
           />
           <Route
@@ -71,9 +71,9 @@ function App() {
           <Route
             path="profile"
             element={
-              // <ProtectedRoute>
-              <Profile />
-              // </ProtectedRoute>
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
             }
           />
         </Route>
