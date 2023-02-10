@@ -39,17 +39,17 @@ function App() {
         <Route
           path="/login"
           element={
-            <ProtectedRouteLogin>
-              <Login />
-            </ProtectedRouteLogin>
+            // <ProtectedRouteLogin>
+            <Login />
+            // </ProtectedRouteLogin>
           }
         />
         <Route
           path="/"
           element={
-            <ProtectedRoute>
-              <NavBar />
-            </ProtectedRoute>
+            // <ProtectedRoute>
+            <NavBar />
+            // </ProtectedRoute>
           }
         >
           <Route
