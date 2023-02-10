@@ -37,7 +37,6 @@ function Login() {
         console.error(response);
       }
     } catch (error) {
-      console.log(`${import.meta.env.VITE_BACKEND_URL}`);
       console.error(error.message);
       setErrorConnection(true);
     }
