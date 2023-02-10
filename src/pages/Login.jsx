@@ -26,7 +26,7 @@ function Login() {
     try {
       event.preventDefault();
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/login`,
+        `${import.meta.env.VITE_BACKEND_URL}/logins`,
         inputs
       );
       if (response.data.token) {
