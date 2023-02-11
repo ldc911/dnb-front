@@ -23,6 +23,7 @@ export default function Home() {
         console.error(err);
       });
   }, [sessionDelete, sessionUpdate]);
+
   const today = new Date();
   const dateTransform = (oneDate) => {
     const date = new Date(oneDate);
