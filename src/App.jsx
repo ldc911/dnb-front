@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import {
   BrowserRouter as Router,
@@ -13,6 +13,7 @@ import NavBar from "./components/NavBar";
 import CreateSession from "./pages/CreateSession";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
+import RecoverPassword from "./pages/RecoverPassword";
 
 import "./index.css";
 
@@ -33,6 +34,12 @@ function ProtectedRouteLogin({ children }) {
 }
 
 function App() {
+  const [showNotifModif, setShowNotifModif] = useState(false);
+  const openNotif = () => setShowNotifModif(true);
+  const closeNotif = () => {
+    setTimeout(() => setShowNotifModif(false), 3000);
+  };
+
   return (
     <Router>
       <Routes>
@@ -40,10 +47,20 @@ function App() {
           path="/login"
           element={
             <ProtectedRouteLogin>
-              <Login />
+              <Login
+                showNotifModif={showNotifModif}
+                setShowNotifModif={setShowNotifModif}
+              />
             </ProtectedRouteLogin>
           }
         />
+        <Route
+          path="/password_recover/:token"
+          element={
+            <RecoverPassword openNotif={openNotif} closeNotif={closeNotif} />
+          }
+        />
+
         <Route
           path="/"
           element={

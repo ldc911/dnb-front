@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -5,8 +6,14 @@ import { XCircleIcon } from "@heroicons/react/24/solid";
 import logo from "../assets/logo.png";
 import pictureForm from "../assets/form-picture.webp";
 import { AuthContext } from "../contexts/AuthContext";
+import ModalForgottenPassword from "../components/ModalForgottenPassword";
+import NotifRecoverPwd from "../components/NotifRecoverPwd";
+import NotifModifPwd from "../components/NotifModifPwd";
 
-function Login() {
+function Login({ showNotifModif, setShowNotifModif }) {
+  const [modalForgottenPassword, setModalForgottenPassword] = useState(false);
+  const [showNotif, setShowNotif] = useState(false);
+
   const navigate = useNavigate();
 
   const [inputs, setInputs] = useState({
@@ -14,6 +21,15 @@ function Login() {
     password: "",
   });
 
+  const close = () => {
+    setShowNotif(false);
+  };
+
+  const handleClose = () => {
+    setModalForgottenPassword(false);
+    setShowNotif(true);
+    setTimeout(() => close(), 3000);
+  };
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -44,6 +60,15 @@ function Login() {
 
   return (
     <div className="min-h-screen flex">
+      <ModalForgottenPassword
+        modalForgottenPassword={modalForgottenPassword}
+        handleClose={handleClose}
+      />
+      <NotifRecoverPwd showNotif={showNotif} setShowNotif={setShowNotif} />
+      <NotifModifPwd
+        showNotifModif={showNotifModif}
+        setShowNotifModif={setShowNotifModif}
+      />
       <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-32 xl:px-44">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <img className="h-16 mb-10 w-auto" src={logo} alt="logo" />
@@ -115,6 +140,13 @@ function Login() {
                       className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-gray-600 focus:border-gray-600 sm:text-sm"
                     />
                   </div>
+                  <button
+                    type="button"
+                    className="text-sm font-medium text-gray-700"
+                    onClick={() => setModalForgottenPassword(true)}
+                  >
+                    Mot de passe oublié ?
+                  </button>
                 </div>
                 <div>
                   <button
