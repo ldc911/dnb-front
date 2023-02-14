@@ -27,9 +27,14 @@ function Login({ showNotifModif, setShowNotifModif }) {
 
   const handleClose = () => {
     setModalForgottenPassword(false);
+  };
+
+  const handleCloseFull = () => {
+    setModalForgottenPassword(false);
     setShowNotif(true);
     setTimeout(() => close(), 3000);
   };
+
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -63,6 +68,7 @@ function Login({ showNotifModif, setShowNotifModif }) {
       <ModalForgottenPassword
         modalForgottenPassword={modalForgottenPassword}
         handleClose={handleClose}
+        handleCloseFull={handleCloseFull}
       />
       <NotifRecoverPwd showNotif={showNotif} setShowNotif={setShowNotif} />
       <NotifModifPwd

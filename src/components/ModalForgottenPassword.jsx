@@ -9,6 +9,7 @@ import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 export default function ModalForgottenPassword({
   modalForgottenPassword,
   handleClose,
+  handleCloseFull,
 }) {
   const cancelButtonRef = useRef(null);
   const [email, setEmail] = useState("");
@@ -19,7 +20,7 @@ export default function ModalForgottenPassword({
       .put(`${import.meta.env.VITE_BACKEND_URL}/pwd`, { email })
       .then(() => {
         setError("");
-        handleClose();
+        handleCloseFull();
       })
       .catch((err) => {
         setError("Email inconnu");
