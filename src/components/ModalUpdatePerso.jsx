@@ -2,24 +2,26 @@
 import React, { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import PropTypes from "prop-types";
-import UpdateSessionFull from "./UpdateSessionFull";
+import UpdatePerso from "./UpdatePerso";
 
-function ModalUpdateSession({
-  openModalUpdateSession,
-  setOpenModalUpdateSession,
-  sessionUpdate,
-  setSessionUpdate,
+function ModalUpdatePerso({
+  openModalUpdatePerso,
+  setOpenModalUpdatePerso,
+  persoUpdate,
+  setPersoUpdate,
+  handleNotifUpdatePerso,
+  handleCloseModalUpdatePerso,
   data,
 }) {
   const cancelButtonRef = useRef(null);
 
   return (
-    <Transition.Root show={openModalUpdateSession} as={Fragment}>
+    <Transition.Root show={openModalUpdatePerso} as={Fragment}>
       <Dialog
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
         initialFocus={cancelButtonRef}
-        onClose={setOpenModalUpdateSession}
+        onClose={setOpenModalUpdatePerso}
       >
         <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -52,18 +54,20 @@ function ModalUpdateSession({
           >
             <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6 max-w-5/6">
               <div className="sm:flex sm:items-start">
-                <UpdateSessionFull
+                <UpdatePerso
                   data={data}
-                  setOpenModalUpdateSession={setOpenModalUpdateSession}
-                  sessionUpdate={sessionUpdate}
-                  setSessionUpdate={setSessionUpdate}
+                  setOpenModalUpdatePerso={setOpenModalUpdatePerso}
+                  persoUpdate={persoUpdate}
+                  setPersoUpdate={setPersoUpdate}
+                  handleCloseModalUpdatePerso={handleCloseModalUpdatePerso}
+                  handleNotifUpdatePerso={handleNotifUpdatePerso}
                 />
               </div>
               <div className="mt-6 flex justify-end">
                 <button
                   type="button"
                   className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm"
-                  onClick={() => setOpenModalUpdateSession(false)}
+                  onClick={() => setOpenModalUpdatePerso(false)}
                   ref={cancelButtonRef}
                 >
                   Retour
@@ -77,14 +81,14 @@ function ModalUpdateSession({
   );
 }
 
-export default ModalUpdateSession;
+export default ModalUpdatePerso;
 
-ModalUpdateSession.propTypes = {
-  openModalUpdateSession: PropTypes.bool,
-  setOpenModalUpdateSession: PropTypes.func,
+ModalUpdatePerso.propTypes = {
+  openModalUpdatePerso: PropTypes.bool,
+  setOpenModalUpdatePerso: PropTypes.func,
 };
 
-ModalUpdateSession.defaultProps = {
-  openModalUpdateSession: false,
-  setOpenModalUpdateSession: () => {},
+ModalUpdatePerso.defaultProps = {
+  openModalUpdatePerso: false,
+  setOpenModalUpdatePerso: () => {},
 };

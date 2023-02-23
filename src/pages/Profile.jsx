@@ -21,7 +21,7 @@ export default function Home() {
   return isLoading ? (
     <p>loading</p>
   ) : (
-    <div className=" h-full w-screen p-4">
+    <div className=" w-screen h-full p-4">
       <ul className="flex flex-col md:items-start md:flex-wrap md:justify-evenly md:flex-row justify-center items-center">
         {users.map((data) => (
           <li key={data.id}>

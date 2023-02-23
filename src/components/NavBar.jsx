@@ -10,7 +10,7 @@ export default function NavBar() {
   const location = useLocation().pathname;
   return (
     <>
-      <div className="w-full h-10 md:bg-red-800 ">
+      <div className="w-full h-10 md:bg-red-800">
         <div className="hidden md:h-full md:text-white md:flex flex-row items-center justify-center gap-12">
           {location !== "/" && (
             <div className="hover:font-semibold">
@@ -34,12 +34,12 @@ export default function NavBar() {
             </div>
           )}
         </div>
-        <Popover className="fixed top-0 left-0 p-3 md:hidden whitespace-nowrap">
+        <Popover className="fixed top-0 left-0 p-3 md:hidden whitespace-nowrap z-10">
           <Popover.Button>
             <Bars2Icon className="w-14 h-10 text-red-700" />
           </Popover.Button>
 
-          <Popover.Panel className="absolute z-10">
+          <Popover.Panel className="absolute">
             <div className="flex flex-col bg-white rounded-md shadow-md px-1">
               {location !== "/" && (
                 <Link
@@ -72,7 +72,7 @@ export default function NavBar() {
           </Popover.Panel>
         </Popover>
       </div>
-      {location !== "/create" && (
+      {location === "/" && (
         <Link to="/create">
           <PlusCircleIcon className="fixed bottom-3 right-3 w-20 h-20 text-red-800" />
         </Link>
