@@ -31,7 +31,7 @@ function Biography({ data }) {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full h-3/4">
       <div className="flex flex-row justify-end px-2">
         {currentUserData.id === parseInt(id, 10) && (
           <button type="button" onClick={handleClick}>
@@ -49,7 +49,7 @@ function Biography({ data }) {
         <textarea
           name=""
           id=""
-          rows="5"
+          rows="3"
           className="w-full border-slate-300 rounded text-center"
           defaultValue={userBio}
           onChange={handleChange}

@@ -5,7 +5,7 @@ import getRandomColor from "./utils/getRandomColor";
 export default function Avatar({ data }) {
   return (
     <div className="h-full w-full shrink-0">
-      {data.avatar === null || data.avatar === "" ? (
+      {data.avatar === "" ? (
         <div
           className={`h-full w-full rounded-full overflow-hidden ${getRandomColor()} flex justify-center items-center text-4xl md:text-6xl text-white font-medium shadow-md border-4 border-white`}
         >

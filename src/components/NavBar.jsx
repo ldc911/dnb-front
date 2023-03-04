@@ -8,7 +8,6 @@ import { PlusCircleIcon } from "@heroicons/react/20/solid";
 import { AuthContext } from "../contexts/AuthContext";
 import getRandomColor from "./utils/getRandomColor";
 import DisconnectModal from "./DisconnectModal";
-import classNames from "./utils/classNames";
 
 export default function NavBar() {
   const [openModalDisconnect, setOpenModalDisconnect] = useState(false);
@@ -17,14 +16,13 @@ export default function NavBar() {
   };
   const location = useLocation().pathname;
   const { currentUserData } = useContext(AuthContext);
-
   return (
     <>
       <DisconnectModal
         openModalDisconnect={openModalDisconnect}
         setOpenModalDisconnect={setOpenModalDisconnect}
       />
-      <div className="w-full h-10 md:bg-red-800">
+      <div className="w-full h-11 md:bg-red-800 relative z-50">
         <div className="hidden md:h-full md:text-white md:flex flex-row items-center justify-center gap-12 relative">
           {location !== "/" && (
             <div className="hover:font-semibold">
@@ -47,12 +45,12 @@ export default function NavBar() {
               </Link>
             </div>
           )}
-          <Menu as="div" className="fixed flex-shrink-0 right-2 ml-5">
+          <Menu as="div" className="absolute flex-shrink-0 right-2 ml-5">
             <div>
               <Menu.Button className="w-fit items-center py-0.5 px-1.5 rounded-full flex">
                 <span className="sr-only">Open user menu</span>
                 <div className="w-full flex justify-between items-center gap-2">
-                  {currentUserData.avatar !== null ? (
+                  {currentUserData.avatar !== "" ? (
                     <img
                       className="h-9 w-9 shrink-0 rounded-full"
                       src={currentUserData.avatar}
@@ -60,7 +58,7 @@ export default function NavBar() {
                     />
                   ) : (
                     <div
-                      className={`h-9 w-9 shrink-0 rounded-full overflow-hidden ${getRandomColor()} flex justify-center items-center text-5xl text-white font-medium`}
+                      className={`h-9 w-9 shrink-0 rounded-full overflow-hidden ${getRandomColor()} flex justify-center items-center text-2xl text-white font-medium`}
                     >
                       {`${currentUserData.nickname.charAt(0)}`}
                     </div>
@@ -82,7 +80,7 @@ export default function NavBar() {
               leaveTo="transform opacity-0 scale-95"
             >
               <Menu.Item>
-                <div className="absolute bg-white rounded-md shadow-sm">
+                <div className="bg-white rounded-md shadow-sm absolute mt-1 right-2">
                   <div className="hover:font-semibold">
                     <Link
                       to={`/profile/${currentUserData.id}`}
@@ -94,7 +92,7 @@ export default function NavBar() {
                   <button
                     type="button"
                     onClick={handleClick}
-                    className=" block py-2 px-4 w-full text-center text-sm text-red-700 border-t"
+                    className="block py-2 px-4 w-full text-center text-sm text-red-700 border-t"
                   >
                     Déconnexion
                   </button>
@@ -104,13 +102,13 @@ export default function NavBar() {
           </Menu>
         </div>
 
-        <Popover className="fixed top-0 left-0 p-3 md:hidden whitespace-nowrap z-10">
+        <Popover className="absolute top-0 left-0 p-3 md:hidden whitespace-nowrap z-10">
           <Popover.Button>
             <Bars2Icon className="w-14 h-10 text-red-700" />
           </Popover.Button>
 
           <Popover.Panel className="absolute">
-            <div className="flex flex-col bg-white rounded-md shadow-md px-1">
+            <div className="flex flex-col bg-white rounded-md shadow-md px-1 pt-1">
               <div className="max-w-3xl mx-auto px-1 flex items-center w-full mb-2">
                 {currentUserData.avatar !== "" ? (
                   <Link
@@ -146,35 +144,35 @@ export default function NavBar() {
               {location !== "/" && (
                 <Link
                   to="/"
-                  className=" hover:font-semibold"
+                  className="hover:font-semibold"
                   onClick={() => setOpen(false)}
                 >
-                  <p className="mb-2">Accueil</p>
+                  <p className="pl-1 mb-2">Accueil</p>
                 </Link>
               )}
               {location !== "/create" && (
                 <Link
                   to="/create"
-                  className=" hover:font-semibold"
+                  className="hover:font-semibold"
                   onClick={() => setOpen(false)}
                 >
-                  <p className="mb-2">Créer une session</p>
+                  <p className="pl-1 mb-2">Créer une session</p>
                 </Link>
               )}
               {location !== "/profile" && (
                 <Link
                   to="/profile"
-                  className=" hover:font-semibold"
+                  className="hover:font-semibold"
                   onClick={() => setOpen(false)}
                 >
-                  Profils
+                  <p className="pl-1 mb-2">Profils</p>
                 </Link>
               )}
               <div className="border-separate">
                 <button
                   type="button"
                   onClick={handleClick}
-                  className="block py-2 px-4 w-full text-center text-sm text-red-600 border-t"
+                  className="block py-2 px-10 w-full text-center text-sm text-red-600 border-t"
                 >
                   Déconnexion
                 </button>

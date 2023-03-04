@@ -90,11 +90,11 @@ export default function UserList({
 
           <div className="md:h-40 md:w-40 h-32 w-32 absolute -bottom-3 md:-bottom-10">
             {location.pathname === "/profile" ? (
-              <Link to={`/profile/${user.id}`}>
+              <Link to={`/profile/${user.id}`} className="h-full w-full">
                 <Avatar data={user} />
               </Link>
             ) : (
-              <div>
+              <div className="h-full w-full">
                 <Avatar data={user} />
                 {currentUserData.id === parseInt(id, 10) && (
                   <button
@@ -110,14 +110,14 @@ export default function UserList({
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center w-full px-4 text-lg font-bold">
+      <div className="flex flex-col h-1/2 items-center w-full px-4 text-lg font-bold">
         <div className="w-full font-semibold text-xl text-center">
           {nickname}
         </div>
         <div className="text-center text-sm font-semibold mb-3">
           {isMJ ? "Joueur/Dungeon Master" : "Joueur"}
         </div>
-        <div className="w-full font-medium text-sm md:text-base text-center break-words md:justify-between mb-2 shadow h-44">
+        <div className="w-full h-full font-medium text-sm md:text-base text-center break-words md:justify-between mb-2 shadow">
           <Biography data={user} />
         </div>
       </div>
