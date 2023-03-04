@@ -10,18 +10,21 @@ import ModalCreationPerso from "../components/ModalCreationPerso";
 import NotifDeletePerso from "../components/NotifDeletePerso";
 import NotifUpdatePerso from "../components/NotifUpdatePerso";
 import NotifCreationPerso from "../components/NotifCreationPerso";
+import NotifUpdateUser from "../components/NotifUpdateUser";
 
 export default function Home() {
   const [user, setUser] = useState();
   const [perso, setPerso] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [isPersoLoading, setIsPersoLoading] = useState(true);
+  const [userUpdate, setUserUpdate] = useState(false);
   const [persoDelete, setPersoDelete] = useState(false);
   const [persoUpdate, setPersoUpdate] = useState(false);
   const [showNotifDeletePerso, setShowNotifDeletePerso] = useState(false);
   const [showNotifUpdatePerso, setShowNotifUpdatePerso] = useState(false);
   const [showNotifCreationPerso, setShowNotifCreationPerso] = useState(false);
   const [openModalCreatePerso, setOpenModalCreatePerso] = useState(false);
+  const [showNotifUpdateUser, setShowNotifUpdateUser] = useState(false);
 
   const { currentUserData } = useContext(AuthContext);
   const { id } = useParams();
@@ -36,7 +39,7 @@ export default function Home() {
       .catch((err) => {
         console.error(err);
       });
-  }, []);
+  }, [userUpdate]);
 
   useEffect(() => {
     axios
@@ -50,7 +53,7 @@ export default function Home() {
           ? setPerso(null)
           : console.error(err);
       });
-  }, [user, persoDelete, persoUpdate]);
+  }, [isLoading, persoDelete, persoUpdate]);
 
   const closeDeleteNotif = () => {
     setShowNotifDeletePerso(false);
@@ -58,6 +61,10 @@ export default function Home() {
 
   const closeUpdatePersoNotif = () => {
     setShowNotifUpdatePerso(false);
+  };
+
+  const closeUpdateUserNotif = () => {
+    setShowNotifUpdateUser(false);
   };
 
   const closeCreationPersoNotif = () => {
@@ -72,6 +79,11 @@ export default function Home() {
   const handleNotifUpdatePerso = () => {
     setShowNotifUpdatePerso(true);
     setTimeout(() => closeUpdatePersoNotif(), 3000);
+  };
+
+  const handleNotifUpdateUser = () => {
+    setShowNotifUpdateUser(true);
+    setTimeout(() => closeUpdateUserNotif(), 3000);
   };
 
   const handleNotifCreatePerso = () => {
@@ -107,6 +119,10 @@ export default function Home() {
         showNotifCreation={showNotifCreationPerso}
         setShowNotifCreation={setShowNotifCreationPerso}
       />
+      <NotifUpdateUser
+        showNotifUpdateUser={showNotifUpdateUser}
+        setShowNotifUpdateUser={setShowNotifUpdateUser}
+      />
       <ModalCreationPerso
         persoUpdate={persoUpdate}
         setPersoUpdate={setPersoUpdate}
@@ -117,7 +133,12 @@ export default function Home() {
         handleCloseModalCreatePerso={handleCloseModalCreatePerso}
       />
       <div className="  flex flex-col justify-center items-center">
-        <UserList user={user} />
+        <UserList
+          user={user}
+          userUpdate={userUpdate}
+          setUserUpdate={setUserUpdate}
+          handleNotifUpdateUser={handleNotifUpdateUser}
+        />
         <div className=" w-full flex flex-col md:flex-row md:justify-between gap-2 text-xs md:max-w-[75vw] md:text-base ">
           {isPersoLoading || perso === null ? (
             <div className="w-full flex flex-row items-center justify-center leading-9 shadow bg-white rounded-md mb-2 relative">

@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
-import { PencilSquareIcon } from "@heroicons/react/24/outline";
+import { PencilSquareIcon, PencilIcon } from "@heroicons/react/24/outline";
 import Avatar from "./Avatar";
 import DeletePerso from "./DeletePerso";
 import Background from "./Background";
 import HautsFaits from "./HautsFaits";
 import ModalUpdatePerso from "./ModalUpdatePerso";
+import ModaleUpdateAvatar from "./ModaleUpdateAvatar";
 import { AuthContext } from "../contexts/AuthContext";
 
 export default function PersoList({
@@ -20,7 +21,9 @@ export default function PersoList({
 }) {
   const { currentUserData } = useContext(AuthContext);
   const [openModalUpdatePerso, setOpenModalUpdatePerso] = useState(false);
+  const [openModalAvatar, setOpenModalAvatar] = useState(false);
   const { id } = useParams();
+  const expe = "persos";
 
   const handleClick = () => {
     setOpenModalUpdatePerso(true);
@@ -28,6 +31,10 @@ export default function PersoList({
 
   const handleCloseModalUpdatePerso = () => {
     setOpenModalUpdatePerso(false);
+  };
+
+  const handleClickPencil = () => {
+    setOpenModalAvatar(true);
   };
 
   return (
@@ -50,18 +57,38 @@ export default function PersoList({
         openModalUpdatePerso={openModalUpdatePerso}
         setOpenModalUpdatePerso={setOpenModalUpdatePerso}
         setPersoUpdate={setPersoUpdate}
-        handleNotifUpdatePerso={handleNotifUpdatePerso}
+        handleNotif={handleNotifUpdatePerso}
         handleCloseModalUpdatePerso={handleCloseModalUpdatePerso}
         data={perso}
       />
-
+      <ModaleUpdateAvatar
+        openModalAvatar={openModalAvatar}
+        setOpenModalAvatar={setOpenModalAvatar}
+        persoUpdate={persoUpdate}
+        setPersoUpdate={setPersoUpdate}
+        handleNotifUpdatePerso={handleNotifUpdatePerso}
+        expe={expe}
+        data={perso}
+      />
       <div className="flex flex-col items-center ">
-        <div className="md:h-40 md:w-40 h-32 w-32 mb-4">
+        <div className="md:h-40 md:w-40 h-32 w-32 mb-4 relative">
           <Avatar data={perso} />
+          {currentUserData.id === parseInt(id, 10) && (
+            <button
+              type="button"
+              className="absolute p-1.5 top-2 right-2 bg-white md:p-2 rounded-lg shadow hover:bg-slate-50"
+              onClick={handleClickPencil}
+            >
+              <PencilIcon className="w-4 h-4 text-red-800 hover:text-red-700" />
+            </button>
+          )}
         </div>
         <div className="text-lg font-semibold">{`${perso.nickname} ${
           perso.lastname ? perso.lastname : ""
         }`}</div>
+        <div className="w-full mb-4 md:pr-5 font-normal text-center md:text-right">
+          {perso.species}
+        </div>
         <div className="w-full mb-4 md:pr-5 font-medium text-center md:text-right">
           {perso.classe}
         </div>

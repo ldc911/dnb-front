@@ -18,6 +18,7 @@ export default function UpdatePerso({
     nickname: data.nickname || null,
     lastname: data.lastname || null,
     classe: data.classe || null,
+    species: data.species || null,
   });
 
   const handleChangeNickname = (event) => {
@@ -32,6 +33,10 @@ export default function UpdatePerso({
     setPerso({ ...perso, classe: event.target.value });
   };
 
+  const handleChangeSpecies = (event) => {
+    setPerso({ ...perso, species: event.target.value });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
@@ -41,6 +46,7 @@ export default function UpdatePerso({
           nickname: perso.nickname || "null",
           lastname: perso.lastname || "null",
           classe: perso.classe || "null",
+          species: perso.species || "null",
         },
         {
           headers: {
@@ -89,6 +95,18 @@ export default function UpdatePerso({
               value={perso.classe}
               onChange={handleChangeClasse}
               placeholder="Classe(s), sous-classe(s)"
+              className="w-full"
+            />
+          </div>
+        </div>
+        <div className="w-full h-10 mb-1 px-4 flex flex-row justify-between items-center">
+          <div className="text-center">Espèce</div>
+          <div className=" border border-gray-300 rounded shadow-sm  pl-4 pr-10 py-1 w-1/2 ">
+            <input
+              type="text"
+              value={perso.species}
+              onChange={handleChangeSpecies}
+              placeholder="Espèce"
               className="w-full"
             />
           </div>

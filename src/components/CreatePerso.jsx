@@ -22,6 +22,7 @@ export default function CreatePerso({
     background: "",
     avatar: "",
     hauts_faits: "",
+    species: "",
   });
   const [imageName, setImageName] = useState("");
   const [imageSrc, setImageSrc] = useState("");
@@ -47,6 +48,10 @@ export default function CreatePerso({
     setPerso({ ...perso, hauts_faits: event.target.value });
   };
 
+  const handleChangeSpecies = (event) => {
+    setPerso({ ...perso, species: event.target.value });
+  };
+
   function handleChangeAvatar(event) {
     setImageName(event.target.files[0].name);
     setImageSrc(URL.createObjectURL(event.target.files[0]));
@@ -56,37 +61,39 @@ export default function CreatePerso({
     setImageSrc("");
     setImageName("");
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("avatar", inputRef.current.files[0]);
 
-    axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/avatar`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        axios
-          .post(
-            `${import.meta.env.VITE_BACKEND_URL}/persos`,
-            { ...perso, avatar: response.data },
-            { headers: { "Content-Type": "application/json" } }
-          )
-          .then(() => {
-            setPersoUpdate(!persoUpdate);
-            setOpenModalCreatePerso(false);
-            handleNotifCreatePerso();
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    if (inputRef.current.files[0]) {
+      const file = inputRef.current.files[0];
+      const formData = new FormData();
+
+      formData.append("file", file);
+      formData.append("upload_preset", import.meta.env.VITE_UPLOAD_PRESET);
+
+      axios
+        .post(import.meta.env.VITE_UPLOAD_ADDRESS, formData)
+        .then((response) => {
+          perso.avatar = response.data.secure_url;
+        })
+        .then(() => {
+          axios
+            .post(`${import.meta.env.VITE_BACKEND_URL}/persos`, { ...perso })
+            .then(() => {
+              setPersoUpdate(!persoUpdate);
+              handleNotifCreatePerso();
+              setOpenModalCreatePerso(false);
+            });
+        });
+    } else {
+      axios
+        .post(`${import.meta.env.VITE_BACKEND_URL}/persos`, { ...perso })
+        .then(() => {
+          setPersoUpdate(!persoUpdate);
+          handleNotifCreatePerso();
+          setOpenModalCreatePerso(false);
+        });
+    }
   };
 
   return (
@@ -145,6 +152,18 @@ export default function CreatePerso({
               value={perso.lastname || ""}
               onChange={handleChangeLastname}
               placeholder="Famille / Clan"
+              className="w-full"
+            />
+          </div>
+        </div>
+        <div className="w-full h-10 mb-1 px-4 flex flex-row justify-between items-center">
+          <div className="text-center">Espèce</div>
+          <div className=" bg-white border border-gray-300 rounded shadow-sm  pl-4 pr-10 py-1 w-1/2">
+            <input
+              type="text"
+              value={perso.species || ""}
+              onChange={handleChangeSpecies}
+              placeholder="Espèce"
               className="w-full"
             />
           </div>
