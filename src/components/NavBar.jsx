@@ -110,7 +110,7 @@ export default function NavBar() {
           <Popover.Panel className="absolute">
             <div className="flex flex-col bg-white rounded-md shadow-md px-1 pt-1">
               <div className="max-w-3xl mx-auto px-1 flex items-center w-full mb-2">
-                {currentUserData.avatar !== "" ? (
+                {currentUserData.avatar ? (
                   <Link
                     to={`/profile/${currentUserData.id}`}
                     onClick={() => setOpen(false)}
