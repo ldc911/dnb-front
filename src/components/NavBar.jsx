@@ -50,7 +50,7 @@ export default function NavBar() {
               <Menu.Button className="w-fit items-center py-0.5 px-1.5 rounded-full flex">
                 <span className="sr-only">Open user menu</span>
                 <div className="w-full flex justify-between items-center gap-2">
-                  {currentUserData.avatar !== "" ? (
+                  {currentUserData.avatar ? (
                     <img
                       className="h-9 w-9 shrink-0 rounded-full"
                       src={currentUserData.avatar}
