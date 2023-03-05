@@ -1,15 +1,24 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import SessionList from "../components/SessionList";
 import RandomSpell from "../components/RandomSpell";
+import ModalUpdatePwd from "../components/ModalUpdatePwd";
+import NotifUpdateUser from "../components/NotifUpdateUser";
+import { AuthContext } from "../contexts/AuthContext";
 
 export default function Home() {
   const [session, setSession] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [sessionDelete, setSessionDelete] = useState(true);
   const [sessionUpdate, setSessionUpdate] = useState(true);
+  const [openModalChangePwd, setOpenModalChangePwd] = useState(false);
+  const [showNotifUpdateUser, setShowNotifUpdateUser] = useState(false);
+
+  const { currentUserData } = useContext(AuthContext);
+  const { firstConnexion } = currentUserData;
+
   const location = useLocation();
   const queryString = location.search;
   useEffect(() => {
@@ -24,16 +33,44 @@ export default function Home() {
       });
   }, [sessionDelete, sessionUpdate]);
 
+  const handleCloseModalUpdatePwd = () => {
+    setOpenModalChangePwd(false);
+  };
+
+  const closeUpdateUserNotif = () => {
+    setShowNotifUpdateUser(false);
+  };
+
+  const handleNotifUpdateUser = () => {
+    setShowNotifUpdateUser(true);
+    setTimeout(() => closeUpdateUserNotif(), 3000);
+  };
+
+  useEffect(() => {
+    if (firstConnexion && !isLoading) {
+      setOpenModalChangePwd(true);
+    }
+  }, [isLoading]);
+
   const today = new Date();
   const dateTransform = (oneDate) => {
     const date = new Date(oneDate);
     return date;
   };
-
   return isLoading ? (
     <p>loading</p>
   ) : (
     <div className="h-full flex flex-col">
+      <NotifUpdateUser
+        showNotifUpdateUser={showNotifUpdateUser}
+        setShowNotifUpdateUser={setShowNotifUpdateUser}
+      />
+      <ModalUpdatePwd
+        openModalChangePwd={openModalChangePwd}
+        setOpenModalChangePwd={setOpenModalChangePwd}
+        handleNotifUpdateUser={handleNotifUpdateUser}
+        handleCloseModalUpdatePwd={handleCloseModalUpdatePwd}
+      />
       <div className=" flex flex-col gap-4 p-3 md:grid md:grid-cols-2">
         {session.filter((element) => {
           return dateTransform(element.dateSession) >= today;

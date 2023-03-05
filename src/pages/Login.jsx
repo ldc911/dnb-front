@@ -47,7 +47,7 @@ function Login({ showNotifModif, setShowNotifModif }) {
     try {
       event.preventDefault();
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/logins`,
+        `${import.meta.env.VITE_BACKEND_URL}/login`,
         inputs
       );
       if (response.data.token) {

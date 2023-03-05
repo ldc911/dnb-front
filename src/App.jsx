@@ -14,6 +14,8 @@ import CreateSession from "./pages/CreateSession";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import RecoverPassword from "./pages/RecoverPassword";
+import UserProfile from "./pages/UserProfile";
+import PageNotFound from "./pages/PageNotFound";
 
 import "./index.css";
 
@@ -50,17 +52,18 @@ function App() {
               <Login
                 showNotifModif={showNotifModif}
                 setShowNotifModif={setShowNotifModif}
-              />
+              />{" "}
             </ProtectedRouteLogin>
           }
         />
         <Route
           path="/password_recover/:token"
           element={
-            <RecoverPassword openNotif={openNotif} closeNotif={closeNotif} />
+            <ProtectedRouteLogin>
+              <RecoverPassword openNotif={openNotif} closeNotif={closeNotif} />
+            </ProtectedRouteLogin>
           }
         />
-
         <Route
           path="/"
           element={
@@ -93,7 +96,9 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/profile/:id" element={<UserProfile />} />
         </Route>
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Router>
   );
