@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -10,7 +10,6 @@ import "react-day-picker/dist/style.css";
 import { useNavigate } from "react-router-dom";
 import { Switch } from "@headlessui/react";
 import SelectMenuDuration from "../components/selects/SelectMenuDuration";
-import SelectMenu from "../components/selects/SelectMenu";
 
 const { VITE_BACKEND_URL } = import.meta.env;
 
@@ -27,34 +26,19 @@ export default function CreateSession() {
   const [selectedCampaign, setSelectedCampaign] = useState(false);
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [users, setUsers] = useState("");
-  const [mealDealer, setMealDealer] = useState(null);
-  const [mealDealerName, setMealDealerName] = useState("Qui régale ?");
+  const [mealDealerName, setMealDealerName] = useState("");
   const [menu, setMenu] = useState("");
-  const [sweetDealer, setSweetDealer] = useState(null);
-  const [sweetDealerName, setSweetDealerName] = useState("Qui régale ?");
-  const [aperoDealer, setAperoDealer] = useState(null);
-  const [aperoDealerName, setAperoDealerName] = useState("Qui régale ?");
-  const [dessertDealer, setDessertDealer] = useState(null);
-  const [dessertDealerName, setDessertDealerName] = useState("Qui régale ?");
-  const [softDealer, setSoftDealer] = useState(null);
-  const [softDealerName, setSoftDealerName] = useState("Qui régale ?");
-  const [alcoolDealer, setAlcoolDealer] = useState(null);
-  const [alcoolDealerName, setAlcoolDealerName] = useState("Qui régale ?");
+  const [sweets, setSweets] = useState("");
+  const [sweetsDealerName, setSweetsDealerName] = useState("");
+  const [aperoDealerName, setAperoDealerName] = useState("");
+  const [apero, setApero] = useState("");
+  const [dessertDealerName, setDessertDealerName] = useState("");
+  const [dessert, setDessert] = useState("");
+  const [soft, setSoft] = useState("");
+  const [softDealerName, setSoftDealerName] = useState("");
+  const [alcool, setAlcool] = useState("");
+  const [alcoolDealerName, setAlcoolDealerName] = useState("");
   const navigate = useNavigate();
-
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/users`)
-      .then((response) => {
-        setIsLoading(false);
-        setUsers(response.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
 
   const handleChange = (event) => {
     setTitle(event.target.value);
@@ -65,53 +49,48 @@ export default function CreateSession() {
   const handleChangeMenu = (event) => {
     setMenu(event.target.value);
   };
+  const handleChangeMealDealer = (event) => {
+    setMealDealerName(event.target.value);
+  };
+  const handleDessertDealer = (event) => {
+    setDessertDealerName(event.target.value);
+  };
+  const handleChangeDessert = (event) => {
+    setDessert(event.target.value);
+  };
+  const handleAperoDealer = (event) => {
+    setAperoDealerName(event.target.value);
+  };
+  const handleChangeApero = (event) => {
+    setApero(event.target.value);
+  };
+  const handleSweetsDealer = (event) => {
+    setSweetsDealerName(event.target.value);
+  };
+  const handleChangeSweets = (event) => {
+    setSweets(event.target.value);
+  };
+  const handleSoftDealer = (event) => {
+    setSoftDealerName(event.target.value);
+  };
+  const handleChangeSoft = (event) => {
+    setSoft(event.target.value);
+  };
+  const handleAlcoolDealer = (event) => {
+    setAlcoolDealerName(event.target.value);
+  };
+  const handleChangeAlcool = (event) => {
+    setAlcool(event.target.value);
+  };
 
-  let footer = <p>Sélectionne une date.</p>;
+  let footer = <p className="text-sm text-gray-500">Sélectionne une date.</p>;
   if (selectedDate) {
-    footer = <p>Date sélectionnée : {format(selectedDate, "PP")}</p>;
+    footer = (
+      <p className="text-sm">
+        Date sélectionnée : {format(selectedDate, "PP")}
+      </p>
+    );
   }
-
-  useEffect(() => {
-    if (mealDealer) {
-      const userMeal = users.filter((user) => user.id === mealDealer);
-      setMealDealerName(userMeal[0].nickname);
-    }
-  }, [mealDealer]);
-
-  useEffect(() => {
-    if (sweetDealer) {
-      const userSweet = users.filter((user) => user.id === sweetDealer);
-      setSweetDealerName(userSweet[0].nickname);
-    }
-  }, [sweetDealer]);
-
-  useEffect(() => {
-    if (aperoDealer) {
-      const userApero = users.filter((user) => user.id === aperoDealer);
-      setAperoDealerName(userApero[0].nickname);
-    }
-  }, [aperoDealer]);
-
-  useEffect(() => {
-    if (dessertDealer) {
-      const userDessert = users.filter((user) => user.id === dessertDealer);
-      setDessertDealerName(userDessert[0].nickname);
-    }
-  }, [dessertDealer]);
-
-  useEffect(() => {
-    if (softDealer) {
-      const userSoft = users.filter((user) => user.id === softDealer);
-      setSoftDealerName(userSoft[0].nickname);
-    }
-  }, [softDealer]);
-
-  useEffect(() => {
-    if (alcoolDealer) {
-      const userAlcool = users.filter((user) => user.id === alcoolDealer);
-      setAlcoolDealerName(userAlcool[0].nickname);
-    }
-  }, [alcoolDealer]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -126,13 +105,18 @@ export default function CreateSession() {
           localisation: location,
           isCampaign,
           title,
-          user_meal: mealDealer,
+          user_meal: mealDealerName,
           details_meals: menu,
-          user_apero: aperoDealer,
-          user_alcool: alcoolDealer,
-          user_sweets: sweetDealer,
-          user_dessert: dessertDealer,
-          user_soft: softDealer,
+          user_apero: aperoDealerName,
+          user_alcool: alcoolDealerName,
+          user_sweets: sweetsDealerName,
+          user_dessert: dessertDealerName,
+          user_soft: softDealerName,
+          details_dessert: dessert,
+          details_sweets: sweets,
+          details_apero: apero,
+          details_alcool: alcool,
+          details_soft: soft,
         },
         {
           headers: {
@@ -144,9 +128,7 @@ export default function CreateSession() {
         navigate("/");
       });
   };
-  return isLoading ? (
-    <p>loading</p>
-  ) : (
+  return (
     <form onSubmit={handleSubmit}>
       <div className="h-full bg-white rounded-md py-6 px-2 m-4 shadow text-xs md:text-xl flex flex-col items-center">
         <div className=" rounded-md shadow pb4 mb-4 h-fit w-fit">
@@ -159,7 +141,7 @@ export default function CreateSession() {
           />
         </div>
         <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
-          <div className="text-center">Combien de temps ?</div>
+          <div className="text-center text-base">Combien de temps ?</div>
           <div className="w-1/2 leading-4">
             <SelectMenuDuration
               duration={duration}
@@ -169,7 +151,7 @@ export default function CreateSession() {
           </div>
         </div>
         <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
-          <div className="text-center">Sera-ce une campagne ?</div>
+          <div className="text-center text-base">Sera-ce une campagne ?</div>
           <div className="py-16">
             <Switch
               checked={selectedCampaign}
@@ -188,102 +170,183 @@ export default function CreateSession() {
             </Switch>
           </div>
         </div>
-        <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
-          <div className="text-center">Le titre ?</div>
-          <div className="  bg-white border border-gray-300 rounded shadow-sm  pl-4 pr-10 py-1">
+        <div className="w-full h-6 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
+          <div className="text-center text-base">Le titre ?</div>
+          <div className="  bg-white border border-gray-300 rounded shadow-sm  px-4 py-1">
             <input
               type="text"
               value={title}
               onChange={handleChange}
               placeholder="Entre le titre de la session"
+              className="text-center w-full h-6 focus:border-none border-none focus:ring-1 focus:ring-red-700 text-sm "
             />
           </div>
         </div>
         <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
-          <div className="text-center">Et c'est où ?</div>
-          <div className=" bg-white border border-gray-300 rounded shadow-sm  pl-4 pr-10 py-1">
+          <div className="text-center text-base">Et c'est où ?</div>
+          <div className=" bg-white border border-gray-300 rounded shadow-sm  px-4 py-1">
             <input
               type="text"
               value={location}
               onChange={handleChangeLocation}
               placeholder="Entre le lieu de la session"
+              className="text-center h-6 focus:border-none border-none focus:ring-1 focus:ring-red-700 text-sm "
+            />
+          </div>
+        </div>
+        <span className="border-b-2 mb-4 w-2/3 md:w-1/2" />
+        <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
+          <div className="text-center text-base">Gestion du repas</div>
+          <div className="  bg-white border border-gray-300 rounded shadow-sm  px-4 py-1">
+            <input
+              type="text"
+              value={mealDealerName}
+              onChange={handleChangeMealDealer}
+              placeholder="Qui s'en occupe ?"
+              className="text-center h-6 focus:border-none border-none focus:ring-1 focus:ring-red-700 text-sm "
             />
           </div>
         </div>
         <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
-          <div>Gestion du repas</div>
-          <div className="w-1/2 leading-4">
-            <SelectMenu
-              data={users}
-              setSelectedElement={setMealDealer}
-              placeHolder={mealDealerName}
-            />
-          </div>
-        </div>
-        <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
-          <div className="text-center">Un peu de détails :</div>
-          <div className=" bg-white border border-gray-300 rounded shadow-sm  pl-4 pr-10 py-1">
+          <div className="text-center text-base">Un peu de détails :</div>
+          <div className="  bg-white border border-gray-300 rounded shadow-sm  px-4 py-1">
             <input
               type="text"
               value={menu}
               onChange={handleChangeMenu}
               placeholder="On mange quoi ?"
+              className="text-center h-6 focus:border-none border-none focus:ring-1 focus:ring-red-700 text-sm "
+            />
+          </div>
+        </div>
+        <span className="border-b-2 mb-4 w-2/3 md:w-1/2" />
+        <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
+          <div className="text-center text-base">Le dessert :</div>
+          <div className="  bg-white border border-gray-300 rounded shadow-sm  px-4 py-1">
+            <input
+              type="text"
+              value={dessertDealerName}
+              onChange={handleDessertDealer}
+              placeholder="Qui s'en occupe ?"
+              className="text-center h-6 focus:border-none border-none focus:ring-1 focus:ring-red-700 text-sm "
             />
           </div>
         </div>
         <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
-          <div>Le dessert :</div>
-          <div className="w-1/2 leading-4">
-            <SelectMenu
-              data={users}
-              setSelectedElement={setDessertDealer}
-              placeHolder={dessertDealerName}
+          <div className="text-center text-base">Un peu de détails :</div>
+          <div className="  bg-white border border-gray-300 rounded shadow-sm  px-4 py-1">
+            <input
+              type="text"
+              value={dessert}
+              onChange={handleChangeDessert}
+              placeholder="Une idée ?"
+              className="text-center h-6 focus:border-none border-none focus:ring-1 focus:ring-red-700 text-sm "
+            />
+          </div>
+        </div>
+        <span className="border-b-2 mb-4 w-2/3 md:w-1/2" />
+        <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
+          <div className="text-center text-base">L'apéro :</div>
+          <div className="  bg-white border border-gray-300 rounded shadow-sm  px-4 py-1">
+            <input
+              type="text"
+              value={aperoDealerName}
+              onChange={handleAperoDealer}
+              placeholder="Qui s'en occupe ?"
+              className="text-center h-6 focus:border-none border-none focus:ring-1 focus:ring-red-700 text-sm "
             />
           </div>
         </div>
         <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
-          <div>L'apéro :</div>
-          <div className="w-1/2 leading-4">
-            <SelectMenu
-              data={users}
-              setSelectedElement={setAperoDealer}
-              placeHolder={aperoDealerName}
+          <div className="text-center text-base">Un peu de détails :</div>
+          <div className="  bg-white border border-gray-300 rounded shadow-sm  px-4 py-1">
+            <input
+              type="text"
+              value={apero}
+              onChange={handleChangeApero}
+              placeholder="Une idée ?"
+              className="text-center h-6 focus:border-none border-none focus:ring-1 focus:ring-red-700 text-sm "
+            />
+          </div>
+        </div>
+        <span className="border-b-2 mb-4 w-2/3 md:w-1/2" />
+        <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
+          <div className="text-center text-base">Le sucré :</div>
+          <div className="  bg-white border border-gray-300 rounded shadow-sm  px-4 py-1">
+            <input
+              type="text"
+              value={sweetsDealerName}
+              onChange={handleSweetsDealer}
+              placeholder="Qui s'en occupe ?"
+              className="text-center h-6 focus:border-none border-none focus:ring-1 focus:ring-red-700 text-sm "
             />
           </div>
         </div>
         <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
-          <div>Le sucré :</div>
-          <div className="w-1/2 leading-4">
-            <SelectMenu
-              data={users}
-              setSelectedElement={setSweetDealer}
-              placeHolder={sweetDealerName}
+          <div className="text-center text-base">Un peu de détails :</div>
+          <div className="  bg-white border border-gray-300 rounded shadow-sm  px-4 py-1">
+            <input
+              type="text"
+              value={sweets}
+              onChange={handleChangeSweets}
+              placeholder="Une idée ?"
+              className="text-center h-6 focus:border-none border-none focus:ring-1 focus:ring-red-700 text-sm "
+            />
+          </div>
+        </div>
+        <span className="border-b-2 mb-4 w-2/3 md:w-1/2" />
+        <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
+          <div className="text-center text-base">Le sans alcool :</div>
+          <div className="  bg-white border border-gray-300 rounded shadow-sm  px-4 py-1">
+            <input
+              type="text"
+              value={softDealerName}
+              onChange={handleSoftDealer}
+              placeholder="Qui s'en occupe ?"
+              className="text-center h-6 focus:border-none border-none focus:ring-1 focus:ring-red-700 text-sm "
             />
           </div>
         </div>
         <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
-          <div>Le sans alcool :</div>
-          <div className="w-1/2 leading-4">
-            <SelectMenu
-              data={users}
-              setSelectedElement={setSoftDealer}
-              placeHolder={softDealerName}
+          <div className="text-center text-base">Un peu de détails :</div>
+          <div className="  bg-white border border-gray-300 rounded shadow-sm  px-4 py-1">
+            <input
+              type="text"
+              value={soft}
+              onChange={handleChangeSoft}
+              placeholder="Une idée ?"
+              className="text-center h-6 focus:border-none border-none focus:ring-1 focus:ring-red-700 text-sm "
             />
           </div>
         </div>
-        <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center mb-3">
-          <div>La bière et le vin :</div>
-          <div className="w-1/2 leading-4">
-            <SelectMenu
-              data={users}
-              setSelectedElement={setAlcoolDealer}
-              placeHolder={alcoolDealerName}
+        <span className="border-b-2 mb-4 w-2/3 md:w-1/2" />
+        <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
+          <div className="text-center text-base">L'alcool :</div>
+          <div className="  bg-white border border-gray-300 rounded shadow-sm  px-4 py-1">
+            <input
+              type="text"
+              value={alcoolDealerName}
+              onChange={handleAlcoolDealer}
+              placeholder="Qui s'en occupe ?"
+              className="text-center h-6 focus:border-none border-none focus:ring-1 focus:ring-red-700 text-sm "
+            />
+          </div>
+        </div>
+        <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
+          <div className="text-center text-base">Un peu de détails :</div>
+          <div className="  bg-white border border-gray-300 rounded shadow-sm  px-4 py-1">
+            <input
+              type="text"
+              value={alcool}
+              onChange={handleChangeAlcool}
+              placeholder="Une idée ?"
+              className="text-center h-6 focus:border-none border-none focus:ring-1 focus:ring-red-700 text-sm "
             />
           </div>
         </div>
         <button
           type="submit"
-          className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-900 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-900 hover:bg-red-700 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-red-700"
         >
           Valider !
         </button>

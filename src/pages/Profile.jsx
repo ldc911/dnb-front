@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import UserList from "../components/UserList";
+import UserList from "../components/profil/user/UserList";
 
 export default function Home() {
   const [users, setUsers] = useState();

@@ -4,13 +4,13 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { PlusCircleIcon } from "@heroicons/react/20/solid";
 import { AuthContext } from "../contexts/AuthContext";
-import UserList from "../components/UserList";
-import PersoList from "../components/PersoList";
-import ModalCreationPerso from "../components/ModalCreationPerso";
-import NotifDeletePerso from "../components/NotifDeletePerso";
-import NotifUpdatePerso from "../components/NotifUpdatePerso";
-import NotifCreationPerso from "../components/NotifCreationPerso";
-import NotifUpdateUser from "../components/NotifUpdateUser";
+import UserList from "../components/profil/user/UserList";
+import PersoList from "../components/profil/perso/PersoList";
+import ModalCreationPerso from "../components/profil/perso/ModalCreationPerso";
+import NotifDeletePerso from "../components/notifications/NotifDeletePerso";
+import NotifUpdatePerso from "../components/notifications/NotifUpdatePerso";
+import NotifCreationPerso from "../components/notifications/NotifCreationPerso";
+import NotifUpdateUser from "../components/notifications/NotifUpdateUser";
 
 export default function Home() {
   const [user, setUser] = useState();
@@ -28,7 +28,6 @@ export default function Home() {
 
   const { currentUserData } = useContext(AuthContext);
   const { id } = useParams();
-
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/users/${id}`)
@@ -39,8 +38,7 @@ export default function Home() {
       .catch((err) => {
         console.error(err);
       });
-  }, [userUpdate]);
-
+  }, [userUpdate, id]);
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/persos/${id}`)

@@ -2,10 +2,10 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-import SessionList from "../components/SessionList";
+import Session from "../components/session/Session";
 import RandomSpell from "../components/RandomSpell";
-import ModalUpdatePwd from "../components/ModalUpdatePwd";
-import NotifUpdateUser from "../components/NotifUpdateUser";
+import ModalUpdatePwd from "../components/profil/user/ModalUpdatePwd";
+import NotifUpdateUser from "../components/notifications/NotifUpdateUser";
 import { AuthContext } from "../contexts/AuthContext";
 
 export default function Home() {
@@ -71,7 +71,10 @@ export default function Home() {
         handleNotifUpdateUser={handleNotifUpdateUser}
         handleCloseModalUpdatePwd={handleCloseModalUpdatePwd}
       />
-      <div className=" flex flex-col gap-4 p-3 md:grid md:grid-cols-2">
+      <div className=" flex flex-col p-3 md:flex-row md:flex-wrap md:items-start md:justify-start">
+        <div className="hidden p-2 md:block overflow-hidden">
+          <RandomSpell />
+        </div>
         {session.filter((element) => {
           return dateTransform(element.dateSession) >= today;
         }).length === 0 ? (
@@ -82,14 +85,14 @@ export default function Home() {
             />
           </div>
         ) : (
-          <ul>
+          <ul className="md:flex md:flex-wrap">
             {session
               .filter((element) => {
                 return dateTransform(element.dateSession) >= today;
               })
               .map((data, index) => (
-                <li key={data.id}>
-                  <SessionList
+                <li className="md:w-1/2 p-2" key={data.id}>
+                  <Session
                     session={data}
                     query={queryString}
                     sessionDelete={sessionDelete}
@@ -102,9 +105,6 @@ export default function Home() {
               ))}
           </ul>
         )}
-        <div className="hidden md:block">
-          <RandomSpell />
-        </div>
       </div>
     </div>
   );
