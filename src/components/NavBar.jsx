@@ -6,8 +6,8 @@ import { Popover, Menu, Transition } from "@headlessui/react";
 import { Bars2Icon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { PlusCircleIcon } from "@heroicons/react/20/solid";
 import { AuthContext } from "../contexts/AuthContext";
-import getRandomColor from "./utils/getRandomColor";
-import DisconnectModal from "./DisconnectModal";
+import getRandomColor from "../utils/getRandomColor";
+import DisconnectModal from "./profil/user/DisconnectModal";
 
 export default function NavBar() {
   const [openModalDisconnect, setOpenModalDisconnect] = useState(false);

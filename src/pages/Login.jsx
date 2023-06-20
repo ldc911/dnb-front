@@ -6,9 +6,9 @@ import { XCircleIcon } from "@heroicons/react/24/solid";
 import logo from "../assets/logo.png";
 import pictureForm from "../assets/form-picture.webp";
 import { AuthContext } from "../contexts/AuthContext";
-import ModalForgottenPassword from "../components/ModalForgottenPassword";
-import NotifRecoverPwd from "../components/NotifRecoverPwd";
-import NotifModifPwd from "../components/NotifModifPwd";
+import ModalForgottenPassword from "../components/profil/user/ModalForgottenPassword";
+import NotifRecoverPwd from "../components/notifications/NotifRecoverPwd";
+import NotifModifPwd from "../components/notifications/NotifModifPwd";
 
 function Login({ showNotifModif, setShowNotifModif }) {
   const [modalForgottenPassword, setModalForgottenPassword] = useState(false);
