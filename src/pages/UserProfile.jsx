@@ -7,10 +7,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import UserList from "../components/profil/user/UserList";
 import PersoList from "../components/profil/perso/PersoList";
 import ModalCreationPerso from "../components/profil/perso/ModalCreationPerso";
-import NotifDeletePerso from "../components/notifications/NotifDeletePerso";
-import NotifUpdatePerso from "../components/notifications/NotifUpdatePerso";
-import NotifCreationPerso from "../components/notifications/NotifCreationPerso";
-import NotifUpdateUser from "../components/notifications/NotifUpdateUser";
+import Notif from "../components/notifications/Notif";
 
 export default function Home() {
   const [user, setUser] = useState();
@@ -20,11 +17,9 @@ export default function Home() {
   const [userUpdate, setUserUpdate] = useState(false);
   const [persoDelete, setPersoDelete] = useState(false);
   const [persoUpdate, setPersoUpdate] = useState(false);
-  const [showNotifDeletePerso, setShowNotifDeletePerso] = useState(false);
-  const [showNotifUpdatePerso, setShowNotifUpdatePerso] = useState(false);
-  const [showNotifCreationPerso, setShowNotifCreationPerso] = useState(false);
+  const [showNotif, setShowNotif] = useState(false);
   const [openModalCreatePerso, setOpenModalCreatePerso] = useState(false);
-  const [showNotifUpdateUser, setShowNotifUpdateUser] = useState(false);
+  const [notifPayload, setNotifPayload] = useState({});
 
   const { currentUserData } = useContext(AuthContext);
   const { id } = useParams();
@@ -39,6 +34,7 @@ export default function Home() {
         console.error(err);
       });
   }, [userUpdate, id]);
+
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/persos/${id}`)
@@ -53,40 +49,52 @@ export default function Home() {
       });
   }, [isLoading, persoDelete, persoUpdate]);
 
-  const closeDeleteNotif = () => {
-    setShowNotifDeletePerso(false);
+  const payloadCreate = {
+    title: "Personnage créé avec succès !",
+    content: "A lui l'aventure, les dangers et... LA MORT !",
   };
 
-  const closeUpdatePersoNotif = () => {
-    setShowNotifUpdatePerso(false);
+  const payloadDelete = {
+    title: "Personnage supprimé avec succès",
+    content: "Paix à som âme...",
   };
 
-  const closeUpdateUserNotif = () => {
-    setShowNotifUpdateUser(false);
+  const payloadUpdateUser = {
+    title: "Utilisateur mis à jour avec succès",
+    content: "Ca te convient maintenant ?",
   };
 
-  const closeCreationPersoNotif = () => {
-    setShowNotifCreationPerso(false);
+  const payloadUpdatePerso = {
+    title: "Personnage mis à jour avec succès",
+    content: "L'est tout beau maintenant",
+  };
+
+  const closeNotif = () => {
+    setShowNotif(false);
   };
 
   const handleNotifDeletePerso = () => {
-    setShowNotifDeletePerso(true);
-    setTimeout(() => closeDeleteNotif(), 3000);
+    setShowNotif(true);
+    setNotifPayload(payloadDelete);
+    setTimeout(() => closeNotif(), 3000);
   };
 
   const handleNotifUpdatePerso = () => {
-    setShowNotifUpdatePerso(true);
-    setTimeout(() => closeUpdatePersoNotif(), 3000);
+    setShowNotif(true);
+    setNotifPayload(payloadUpdatePerso);
+    setTimeout(() => closeNotif(), 3000);
   };
 
   const handleNotifUpdateUser = () => {
-    setShowNotifUpdateUser(true);
-    setTimeout(() => closeUpdateUserNotif(), 3000);
+    setNotifPayload(payloadUpdateUser);
+    setShowNotif(true);
+    setTimeout(() => closeNotif(), 3000);
   };
 
   const handleNotifCreatePerso = () => {
-    setShowNotifCreationPerso(true);
-    setTimeout(() => closeCreationPersoNotif(), 3000);
+    setShowNotif(true);
+    setNotifPayload(payloadCreate);
+    setTimeout(() => closeNotif(), 3000);
   };
 
   const handleOpenModalCreation = () => {
@@ -104,22 +112,11 @@ export default function Home() {
       </div>
     </div>
   ) : (
-    <div className=" h-full w-screen p-4">
-      <NotifDeletePerso
-        showNotif={showNotifDeletePerso}
-        setShowNotif={setShowNotifDeletePerso}
-      />
-      <NotifUpdatePerso
-        showNotifUpdate={showNotifUpdatePerso}
-        setShowNotifUpdate={setShowNotifUpdatePerso}
-      />
-      <NotifCreationPerso
-        showNotifCreation={showNotifCreationPerso}
-        setShowNotifCreation={setShowNotifCreationPerso}
-      />
-      <NotifUpdateUser
-        showNotifUpdateUser={showNotifUpdateUser}
-        setShowNotifUpdateUser={setShowNotifUpdateUser}
+    <div className="h-full w-screen p-4">
+      <Notif
+        showNotif={showNotif}
+        setShowNotif={setShowNotif}
+        payload={notifPayload}
       />
       <ModalCreationPerso
         persoUpdate={persoUpdate}

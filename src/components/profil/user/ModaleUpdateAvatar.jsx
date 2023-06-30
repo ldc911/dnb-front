@@ -48,9 +48,13 @@ export default function ChangeAvatarModal({
           currentUserData.avatar = response.data.secure_url;
           setCurrentUserData({ ...currentUserData });
           axios
-            .put(`${import.meta.env.VITE_BACKEND_URL}/${expe}/${data.id}`, {
-              ...modifiedItem,
-            })
+            .put(
+              `${import.meta.env.VITE_BACKEND_URL}/${expe}/${data.id}`,
+              {
+                ...modifiedItem,
+              },
+              { headers: { currentuserid: currentUserData.id } }
+            )
             .then(() => {
               handleNotif();
               setOpenModalAvatar(false);

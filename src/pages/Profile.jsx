@@ -1,14 +1,18 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import { AuthContext } from "../contexts/AuthContext";
 import UserList from "../components/profil/user/UserList";
 
 export default function Home() {
   const [users, setUsers] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const { currentUserData } = useContext(AuthContext);
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/users`)
+      .get(`${import.meta.env.VITE_BACKEND_URL}/users`, {
+        headers: { currentUserId: currentUserData.id },
+      })
       .then((response) => {
         setIsLoading(false);
         setUsers(response.data);

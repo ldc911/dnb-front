@@ -46,9 +46,13 @@ export default function ChangeBannerModal({
         .then((response) => {
           modifiedItem.banPic = response.data.secure_url;
           axios
-            .put(`${import.meta.env.VITE_BACKEND_URL}/${expe}/${data.id}`, {
-              ...modifiedItem,
-            })
+            .put(
+              `${import.meta.env.VITE_BACKEND_URL}/${expe}/${data.id}`,
+              {
+                ...modifiedItem,
+              },
+              { headers: { currentuserid: currentUserData.id } }
+            )
             .then(() => {
               handleNotif();
               setOpenModalBanner(false);

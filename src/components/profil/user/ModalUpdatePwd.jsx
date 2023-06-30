@@ -29,9 +29,13 @@ function ModalUpdatePwd({
       "user",
       JSON.stringify({ ...currentUserData, firstConnexion: 0 })
     );
-    axios.put(`${VITE_BACKEND_URL}/usersConnexion/${id}`, {
-      firstConnexion: 0,
-    });
+    axios.put(
+      `${VITE_BACKEND_URL}/usersConnexion/${id}`,
+      {
+        firstConnexion: 0,
+      },
+      { headers: { currentuserid: id } }
+    );
   };
 
   const handleClose = () => {
@@ -88,7 +92,7 @@ function ModalUpdatePwd({
               <div className="mt-6 flex justify-end">
                 <button
                   type="button"
-                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm"
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm "
                   onClick={handleClose}
                   ref={cancelButtonRef}
                 >

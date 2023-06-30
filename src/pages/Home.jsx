@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import Session from "../components/session/Session";
 import RandomSpell from "../components/RandomSpell";
 import ModalUpdatePwd from "../components/profil/user/ModalUpdatePwd";
-import NotifUpdateUser from "../components/notifications/NotifUpdateUser";
+import Notif from "../components/notifications/Notif";
 import { AuthContext } from "../contexts/AuthContext";
 
 export default function Home() {
@@ -14,7 +14,7 @@ export default function Home() {
   const [sessionDelete, setSessionDelete] = useState(true);
   const [sessionUpdate, setSessionUpdate] = useState(true);
   const [openModalChangePwd, setOpenModalChangePwd] = useState(false);
-  const [showNotifUpdateUser, setShowNotifUpdateUser] = useState(false);
+  const [showNotif, setShowNotif] = useState(false);
 
   const { currentUserData } = useContext(AuthContext);
   const { firstConnexion } = currentUserData;
@@ -37,13 +37,19 @@ export default function Home() {
     setOpenModalChangePwd(false);
   };
 
-  const closeUpdateUserNotif = () => {
-    setShowNotifUpdateUser(false);
+  const closeNotif = () => {
+    setShowNotif(false);
   };
 
-  const handleNotifUpdateUser = () => {
-    setShowNotifUpdateUser(true);
-    setTimeout(() => closeUpdateUserNotif(), 3000);
+  const handleNotif = () => {
+    setShowNotif(true);
+    setTimeout(() => closeNotif(), 3000);
+  };
+
+  const notifPayload = {
+    title: "Mot de passe changé !",
+    content:
+      " Vous pouvez vous connecter avec votre email et votre nouveau mot de passe.",
   };
 
   useEffect(() => {
@@ -61,14 +67,15 @@ export default function Home() {
     <p>loading</p>
   ) : (
     <div className="h-full flex flex-col">
-      <NotifUpdateUser
-        showNotifUpdateUser={showNotifUpdateUser}
-        setShowNotifUpdateUser={setShowNotifUpdateUser}
+      <Notif
+        showNotif={showNotif}
+        setShowNotif={setShowNotif}
+        payload={notifPayload}
       />
       <ModalUpdatePwd
         openModalChangePwd={openModalChangePwd}
         setOpenModalChangePwd={setOpenModalChangePwd}
-        handleNotifUpdateUser={handleNotifUpdateUser}
+        handleNotifUpdateUser={handleNotif}
         handleCloseModalUpdatePwd={handleCloseModalUpdatePwd}
       />
       <div className=" flex flex-col p-3 md:flex-row md:flex-wrap md:items-start md:justify-start">

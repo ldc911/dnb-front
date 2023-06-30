@@ -1,10 +1,11 @@
 /* eslint-disable no-irregular-whitespace */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { Fragment, useRef } from "react";
+import { Fragment, useContext, useRef } from "react";
 import axios from "axios";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 export default function ModalConfirmDeletePerso({
   data,
@@ -13,11 +14,14 @@ export default function ModalConfirmDeletePerso({
   handleNotifDeletePerso,
 }) {
   const { id } = data;
+  const { currentUserData } = useContext(AuthContext);
   const cancelButtonRef = useRef(null);
 
   const handleDelete = () => {
     axios
-      .delete(`${import.meta.env.VITE_BACKEND_URL}/persos/${id}`)
+      .delete(`${import.meta.env.VITE_BACKEND_URL}/persos/${id}`, {
+        headers: { currentuserid: currentUserData.id },
+      })
       .then(() => {
         handleClose();
         handleNotifDeletePerso();

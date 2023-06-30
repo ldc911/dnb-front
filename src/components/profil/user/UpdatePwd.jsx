@@ -41,6 +41,7 @@ export default function UpdatePwd({
         {
           headers: {
             "Content-Type": "application/json",
+            currentUserId: currentUserData.id,
           },
         }
       )
@@ -61,7 +62,7 @@ export default function UpdatePwd({
         </div>
         <div className="w-full h-10 mb-1 px-4 flex flex-row justify-between items-center">
           <div className="text-left">Entre ton mot de passe actuel</div>
-          <div className=" bg-white border border-gray-300 rounded shadow-sm  pl-4 pr-10 py-1 w-1/2">
+          <div className=" bg-white border border-gray-300 rounded shadow-sm  px-4 py-1 w-1/2">
             <input
               type="password"
               name="oldPassword"
@@ -69,13 +70,13 @@ export default function UpdatePwd({
               autoComplete="oldPassword"
               onChange={(e) => setOldPassword(e.target.value)}
               placeholder="mot de passe actuel"
-              className="w-full focus:border-none focus:ring-red-700"
+              className="text-center w-full h-6 focus:border-none border-none focus:ring-1 focus:ring-red-700 text-sm "
             />
           </div>
         </div>
         <div className="w-full h-10 mb-1 px-4 flex flex-row justify-between items-center">
           <div className="text-left">Entre ton nouveau mot de passe</div>
-          <div className=" border border-gray-300 rounded shadow-sm  pl-4 pr-10 py-1 w-1/2 ">
+          <div className=" border border-gray-300 rounded shadow-sm  px-4 py-1 w-1/2 ">
             <input
               type="password"
               name="password"
@@ -83,7 +84,7 @@ export default function UpdatePwd({
               autoComplete="password"
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="nouveau mot de passe"
-              className="w-full focus:border-none focus:ring-red-700"
+              className="text-center w-full h-6 focus:border-none border-none focus:ring-1 focus:ring-red-700 text-sm "
             />
           </div>
         </div>
@@ -91,7 +92,7 @@ export default function UpdatePwd({
           <div className="text-left w-1/2">
             Confirme le nouveau mot de passe
           </div>
-          <div className=" border border-gray-300 rounded shadow-sm  pl-4 pr-10 py-1 w-1/2 ">
+          <div className=" border border-gray-300 rounded shadow-sm  px-4 py-1 w-1/2 ">
             <input
               type="password"
               name="confirmPassword"
@@ -99,13 +100,13 @@ export default function UpdatePwd({
               autoComplete="confirmPassword"
               onChange={(e) => setConfirmNewPassword(e.target.value)}
               placeholder="confirmer changement"
-              className="w-full focus:border-none focus:ring-red-700"
+              className="text-center w-full h-6 focus:border-none border-none focus:ring-1 focus:ring-red-700 text-sm "
             />
           </div>
         </div>
         <button
           type="submit"
-          className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-900 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-900 hover:bg-red-700 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-red-700"
         >
           Valider !
         </button>

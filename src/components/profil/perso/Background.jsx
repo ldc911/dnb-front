@@ -16,9 +16,13 @@ function Background({ data }) {
     setModifications(!modifications);
     if (modifications) {
       axios
-        .put(`${import.meta.env.VITE_BACKEND_URL}/persos/${data.id}`, {
-          background: userBackground,
-        })
+        .put(
+          `${import.meta.env.VITE_BACKEND_URL}/persos/${data.id}`,
+          {
+            background: userBackground,
+          },
+          { headers: { currentuserid: currentUserData.id } }
+        )
         .then(() => {})
         .catch((err) => {
           console.error(err);

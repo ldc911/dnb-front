@@ -15,9 +15,13 @@ function HautsFaits({ data }) {
     setModifications(!modifications);
     if (modifications) {
       axios
-        .put(`${import.meta.env.VITE_BACKEND_URL}/persos/${data.id}`, {
-          hauts_faits: userHautsFaits,
-        })
+        .put(
+          `${import.meta.env.VITE_BACKEND_URL}/persos/${data.id}`,
+          {
+            hauts_faits: userHautsFaits,
+          },
+          { headers: { currentuserid: currentUserData.id } }
+        )
         .then(() => {})
         .catch((err) => {
           console.error(err);

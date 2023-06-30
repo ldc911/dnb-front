@@ -15,10 +15,14 @@ function Biography({ data }) {
     setModifications(!modifications);
     if (modifications) {
       axios
-        .put(`${import.meta.env.VITE_BACKEND_URL}/users/${id}`, {
-          id,
-          bio: userBio,
-        })
+        .put(
+          `${import.meta.env.VITE_BACKEND_URL}/users/${id}`,
+          {
+            id,
+            bio: userBio,
+          },
+          { headers: { currentuserid: currentUserData.id } }
+        )
         .then(() => {})
         .catch((err) => {
           console.error(err);

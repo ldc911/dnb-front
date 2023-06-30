@@ -2,8 +2,9 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/prop-types */
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 const { VITE_BACKEND_URL } = import.meta.env;
 
@@ -20,6 +21,7 @@ export default function UpdatePerso({
     classe: data.classe || null,
     species: data.species || null,
   });
+  const { currentUserData } = useContext(AuthContext);
 
   const handleChangeNickname = (event) => {
     setPerso({ ...perso, nickname: event.target.value });
@@ -51,6 +53,7 @@ export default function UpdatePerso({
         {
           headers: {
             "Content-Type": "application/json",
+            currentuserid: currentUserData.id,
           },
         }
       )
@@ -71,7 +74,7 @@ export default function UpdatePerso({
               value={perso.nickname}
               onChange={handleChangeNickname}
               placeholder="Prénom ou surnom"
-              required="true"
+              required
               className="w-full h-6 border-none focus:border-none focus:ring-red-700"
             />
           </div>

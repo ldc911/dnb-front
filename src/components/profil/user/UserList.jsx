@@ -47,7 +47,7 @@ export default function UserList({
         </div>
       )}
       <ModalUpdateUser
-        handleNotif={handleNotifUpdateUser}
+        handleNotifUpdateUser={handleNotifUpdateUser}
         openModalUpdateUser={openModalUpdateUser}
         setOpenModalUpdateUser={setOpenModalUpdateUser}
         userUpdate={userUpdate}

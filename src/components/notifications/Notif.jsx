@@ -4,21 +4,18 @@ import { Transition } from "@headlessui/react";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
-export default function NotifCreationPerso({
-  showNotifCreation,
-  setShowNotifCreation,
-}) {
+export default function Notif({ showNotif, setShowNotif, payload }) {
   return (
     <>
       {/* Global notification live region, render this permanently at the end of the document */}
       <div
         aria-live="assertive"
-        className="fixed inset-7 flex items-end px-4 py-6 pointer-events-none sm:p-6 sm:items-start z-10"
+        className="fixed inset-7 flex items-end px-4 py-6 pointer-events-none sm:p-6 sm:items-start z-50"
       >
         <div className="w-full flex flex-col items-center space-y-4 sm:items-end">
           {/* Notification panel, dynamically insert this into the live region when it needs to be displayed */}
           <Transition
-            show={showNotifCreation}
+            show={showNotif}
             as={Fragment}
             enter="transform ease-out duration-300 transition"
             enterFrom="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
@@ -38,10 +35,10 @@ export default function NotifCreationPerso({
                   </div>
                   <div className="ml-3 w-0 flex-1 pt-0.5">
                     <p className="text-sm font-medium text-gray-900">
-                      Personnage créé avec succès !
+                      {payload.title}
                     </p>
                     <p className="mt-1 text-sm text-gray-500">
-                      A lui l'aventure, les dangers et... LA MORT !
+                      {payload.content}
                     </p>
                   </div>
                   <div className="ml-4 flex-shrink-0 flex">
@@ -49,7 +46,7 @@ export default function NotifCreationPerso({
                       type="button"
                       className="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                       onClick={() => {
-                        setShowNotifCreation(false);
+                        setShowNotif(false);
                       }}
                     >
                       <span className="sr-only">Close</span>

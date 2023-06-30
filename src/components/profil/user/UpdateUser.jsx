@@ -2,10 +2,11 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/prop-types */
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import ModalUpdatePwd from "./ModalUpdatePwd";
-import NotifUpdateUser from "../../notifications/NotifUpdateUser";
+import Notif from "../../notifications/Notif";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 const { VITE_BACKEND_URL } = import.meta.env;
 
@@ -16,13 +17,15 @@ export default function UpdateUser({
   setOpenModalUpdateUser,
   handleNotifUpdateUser,
 }) {
-  const [showNotifUpdateUser, setShowNotifUpdateUser] = useState(false);
+  const [showNotif, setShowNotif] = useState(false);
   const [openModalChangePwd, setOpenModalChangePwd] = useState(false);
   const [user, setUser] = useState({
     nickname: data.nickname || null,
     email: data.email || null,
     bio: data.bio || null,
   });
+  const { currentUserData } = useContext(AuthContext);
+
   const handleCloseModalUpdatePwd = () => {
     setOpenModalChangePwd(false);
   };
@@ -39,6 +42,11 @@ export default function UpdateUser({
     setUser({ ...user, bio: event.target.value });
   };
 
+  const notifPayload = {
+    title: "Mot de passe changé avec succès",
+    content: "Vous pourrez vous connecter avec votre nouveau mot de passe",
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
@@ -52,6 +60,7 @@ export default function UpdateUser({
         {
           headers: {
             "Content-Type": "application/json",
+            currentuserid: currentUserData.id,
           },
         }
       )
@@ -66,24 +75,25 @@ export default function UpdateUser({
     setOpenModalChangePwd(true);
   };
 
-  const closeUpdateUserNotif = () => {
-    setShowNotifUpdateUser(false);
+  const closeNotif = () => {
+    setShowNotif(false);
   };
-  const handleNewNotifUpdateUser = () => {
-    setShowNotifUpdateUser(true);
-    setTimeout(() => closeUpdateUserNotif(), 3000);
+  const handleNewNotif = () => {
+    setShowNotif(true);
+    setTimeout(() => closeNotif(), 3000);
   };
 
   return (
     <>
-      <NotifUpdateUser
-        showNotifUpdateUser={showNotifUpdateUser}
-        setShowNotifUpdateUser={setShowNotifUpdateUser}
+      <Notif
+        showNotif={showNotif}
+        setShowNotif={setShowNotif}
+        payload={notifPayload}
       />
       <ModalUpdatePwd
         openModalChangePwd={openModalChangePwd}
         setOpenModalChangePwd={setOpenModalChangePwd}
-        handleNotifUpdateUser={handleNewNotifUpdateUser}
+        handleNotifUpdateUser={handleNewNotif}
         handleCloseModalUpdatePwd={handleCloseModalUpdatePwd}
       />
       <form onSubmit={handleSubmit}>
@@ -96,7 +106,7 @@ export default function UpdateUser({
                 value={user.nickname}
                 onChange={handleChangeNickname}
                 placeholder="Prénom ou surnom"
-                required="true"
+                required
                 className="w-full h-6 border-none focus:border-none focus:ring-red-700"
               />
             </div>
