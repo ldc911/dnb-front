@@ -23,29 +23,32 @@ export default function NavBar() {
         setOpenModalDisconnect={setOpenModalDisconnect}
       />
       <div className="w-full h-11 md:bg-red-800 relative z-50">
-        <div className="hidden md:h-full md:text-white md:flex flex-row items-center justify-center gap-12 relative">
+        <div className="h-5/6 md:h-full md:text-white md:flex md:flex-row md:items-center md:justify-center md:gap-12 relative">
           {location !== "/" && (
-            <div className="hover:font-semibold">
+            <div className="hidden md:block md:hover:font-semibold">
               <Link to="/" className=" hover:font-semibold">
                 Accueil
               </Link>
             </div>
           )}
           {location !== "/create" && (
-            <div className="hover:font-semibold">
+            <div className="hidden md:block md:hover:font-semibold">
               <Link to="/create" className=" hover:font-semibold">
                 Créer une session
               </Link>
             </div>
           )}
           {location !== "/profile" && (
-            <div className="hover:font-semibold">
+            <div className="hidden md:block md:hover:font-semibold">
               <Link to="/profile" className=" hover:font-semibold">
                 Profils
               </Link>
             </div>
           )}
-          <Menu as="div" className="absolute flex-shrink-0 right-2 ml-5">
+          <Menu
+            as="div"
+            className="absolute flex-shrink-0 top-2 md:top-1 right-2 ml-5"
+          >
             <div>
               <Menu.Button className="w-fit items-center py-0.5 px-1.5 rounded-full flex">
                 <span className="sr-only">Open user menu</span>
@@ -63,7 +66,7 @@ export default function NavBar() {
                       {`${currentUserData.nickname.charAt(0)}`}
                     </div>
                   )}
-                  <div className="flex flex-row items-right gap-1">
+                  <div className="hidden md:flex md:flex-row md:items-right md:gap-1">
                     <p>{currentUserData.nickname}</p>
                     <ChevronDownIcon className="w-6 h-6 pt-1 " />
                   </div>
@@ -92,7 +95,7 @@ export default function NavBar() {
                   <button
                     type="button"
                     onClick={handleClick}
-                    className="block py-2 px-4 w-full text-center text-sm text-red-700 border-t"
+                    className="block py-2 px-4 w-full text-center text-sm text-red-600 border-t hover:text-red-900"
                   >
                     Déconnexion
                   </button>
@@ -109,38 +112,8 @@ export default function NavBar() {
 
           <Popover.Panel className="absolute">
             <div className="flex flex-col bg-white rounded-md shadow-md px-1 pt-1">
-              <div className="max-w-3xl mx-auto px-1 flex items-center w-full mb-2">
-                {currentUserData.avatar ? (
-                  <Link
-                    to={`/profile/${currentUserData.id}`}
-                    onClick={() => setOpen(false)}
-                  >
-                    <div className="flex-shrink-0">
-                      <img
-                        className="h-10 w-10 hover:h-11 hover:w-11 rounded-full"
-                        src={currentUserData.avatar}
-                        alt="avatar"
-                      />
-                    </div>
-                  </Link>
-                ) : (
-                  <Link
-                    to={`/profile/${currentUserData.id}`}
-                    onClick={() => setOpen(false)}
-                  >
-                    <div
-                      className={`h-10 w-10 hover:h-11 hover:w-11 rounded-full ${getRandomColor()} flex justify-center items-center text-lg text-white font-medium`}
-                    >
-                      {`${currentUserData.nickname.charAt(0)}`}
-                    </div>
-                  </Link>
-                )}
-                <div className="ml-3">
-                  <div className="text-base font-medium text-gray-800">
-                    {currentUserData.nickname}
-                  </div>
-                </div>
-              </div>
+              {/* TODO ceci à sortir du menu pour afficher en hautà droite */}
+
               {location !== "/" && (
                 <Link
                   to="/"
@@ -172,7 +145,7 @@ export default function NavBar() {
                 <button
                   type="button"
                   onClick={handleClick}
-                  className="block py-2 px-10 w-full text-center text-sm text-red-600 border-t"
+                  className="block py-2 px-10 w-full text-center text-sm text-red-600 border-t hover:text-red-900"
                 >
                   Déconnexion
                 </button>
@@ -183,7 +156,7 @@ export default function NavBar() {
       </div>
       {location === "/" && (
         <Link to="/create">
-          <PlusCircleIcon className="fixed bottom-3 right-3 w-20 h-20 text-red-800" />
+          <PlusCircleIcon className="fixed z-50 bottom-3 right-3 w-20 h-20 text-red-800 opacity-40 hover:opacity-100" />
         </Link>
       )}
       <main>

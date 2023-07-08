@@ -67,7 +67,7 @@ export default function RecoverPassword({ openNotif, closeNotif }) {
                 id="password"
                 placeholder="Mot de passe"
                 autoComplete="password"
-                className="w-full text-center font-medium text-xs"
+                className="w-full h-6 text-center font-medium text-xs focus:ring-1 focus:ring-red-700"
                 onChange={(e) => setNewPassword(e.target.value)}
               />
             </div>
@@ -81,7 +81,7 @@ export default function RecoverPassword({ openNotif, closeNotif }) {
                 id="confirm-password"
                 placeholder="Mot de passe"
                 autoComplete="confirm-password"
-                className="w-full text-center font-medium text-xs"
+                className="w-full h-6 text-center font-medium text-xs focus:ring-1 focus:ring-red-700"
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
@@ -89,7 +89,7 @@ export default function RecoverPassword({ openNotif, closeNotif }) {
           <div className="flex flex-col justify-center items-center ">
             <button
               type="submit"
-              className="w-2/3 md:w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-700 hover:bg-red-900 focus:outline-none focus:ring-2 mb-6 focus:ring-offset-2 focus:ring-gray-600"
+              className="w-2/3 md:w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-700 hover:bg-red-900 focus:outline-none focus:ring-1 mb-6 focus:ring-offset-1 focus:ring-red-700"
               onClick={handleSubmit}
             >
               Valider

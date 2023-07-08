@@ -47,7 +47,7 @@ export default function Home() {
           ? setPerso(null)
           : console.error(err);
       });
-  }, [isLoading, persoDelete, persoUpdate]);
+  }, [isLoading, persoDelete, persoUpdate, id]);
 
   const payloadCreate = {
     title: "Personnage créé avec succès !",
@@ -135,7 +135,7 @@ export default function Home() {
           handleNotifUpdateUser={handleNotifUpdateUser}
         />
         <div className=" w-full flex flex-col md:flex-row md:justify-between gap-2 text-xs md:max-w-[75vw] md:text-base ">
-          {isPersoLoading || perso === null ? (
+          {isPersoLoading || perso.length === 0 ? (
             <div className="w-full flex flex-row items-center justify-center leading-9 shadow bg-white rounded-md mb-2 relative">
               <p className=" text-center font-medium ">
                 Personnages à ajouter !
@@ -156,13 +156,15 @@ export default function Home() {
                 <p className=" text-center font-medium ">
                   {`Personnages de ${user.nickname}`}
                 </p>
-                <button
-                  type="button"
-                  className="absolute right-4"
-                  onClick={handleOpenModalCreation}
-                >
-                  <PlusCircleIcon className="h-8 w-8  text-red-800 hover:text-red-700" />
-                </button>
+                {currentUserData.id === parseInt(id, 10) && (
+                  <button
+                    type="button"
+                    className="absolute right-4"
+                    onClick={handleOpenModalCreation}
+                  >
+                    <PlusCircleIcon className="h-8 w-8  text-red-800 hover:text-red-700" />
+                  </button>
+                )}
               </div>
               <div className="w-full flex flex-col md:grid md:grid-cols-2 md:gap-2">
                 {perso.map((element) => {

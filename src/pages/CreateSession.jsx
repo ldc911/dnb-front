@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
@@ -38,6 +39,8 @@ export default function CreateSession() {
   const [softDealerName, setSoftDealerName] = useState("");
   const [alcool, setAlcool] = useState("");
   const [alcoolDealerName, setAlcoolDealerName] = useState("");
+  const [error, setError] = useState("");
+
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -96,6 +99,9 @@ export default function CreateSession() {
     e.preventDefault();
     let isCampaign;
     selectedCampaign === true ? (isCampaign = 1) : (isCampaign = 0);
+    if (!selectedDate || !selectedDuration || !title) {
+      return setError("Les champs date, durée et titre sont obligatoires");
+    }
     axios
       .post(
         `${VITE_BACKEND_URL}/sessions`,
@@ -138,6 +144,7 @@ export default function CreateSession() {
             onSelect={setSelectedDate}
             footer={footer}
             locale={fr}
+            required
           />
         </div>
         <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
@@ -151,7 +158,7 @@ export default function CreateSession() {
           </div>
         </div>
         <div className="w-full h-10 mb-4 md:w-2/3 px-4 flex flex-row justify-between items-center">
-          <div className="text-center text-base">Sera-ce une campagne ?</div>
+          <div className="text-center text-base">Partie de campagne ?</div>
           <div className="py-16">
             <Switch
               checked={selectedCampaign}
@@ -350,6 +357,7 @@ export default function CreateSession() {
         >
           Valider !
         </button>
+        <p className="mt-2 text-center text-red-800 font-medium">{error}</p>
       </div>
     </form>
   );
