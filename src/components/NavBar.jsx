@@ -112,8 +112,6 @@ export default function NavBar() {
 
           <Popover.Panel className="absolute">
             <div className="flex flex-col bg-white rounded-md shadow-md px-1 pt-1">
-              {/* TODO ceci à sortir du menu pour afficher en hautà droite */}
-
               {location !== "/" && (
                 <Link
                   to="/"
